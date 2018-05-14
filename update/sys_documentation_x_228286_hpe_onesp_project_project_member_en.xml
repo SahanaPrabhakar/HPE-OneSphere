@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="project_member" label="Project member" language="en" table="x_228286_hpe_onesp_project">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>project_member</element>
+            <help/>
+            <hint/>
+            <label>Project member</label>
+            <language>en</language>
+            <name>x_228286_hpe_onesp_project</name>
+            <plural>Project members</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-05-14 14:13:51</sys_created_on>
+            <sys_id>0f18048a4f821300fb4cb82ca310c7bf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Project member</sys_name>
+            <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
+            <sys_update_name>sys_documentation_x_228286_hpe_onesp_project_project_member_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-05-14 14:13:51</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
