@@ -35,7 +35,7 @@
         <function_field>false</function_field>
         <internal_type display_value="String">string</internal_type>
         <mandatory>true</mandatory>
-        <max_length>50</max_length>
+        <max_length>40</max_length>
         <name>x_228286_hpe_onesp_onesphere_project</name>
         <next_element/>
         <primary>false</primary>
@@ -53,8 +53,8 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-05-15 15:46:21</sys_created_on>
-        <sys_id>4166a15e4f021300fb4cb82ca310c772</sys_id>
+        <sys_created_on>2018-05-15 18:40:18</sys_created_on>
+        <sys_id>951e8ed64f821300fb4cb82ca310c792</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>Project name</sys_name>
         <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
@@ -62,7 +62,7 @@
         <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
         <sys_update_name>sys_dictionary_x_228286_hpe_onesp_onesphere_project_project_name</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-15 15:55:37</sys_updated_on>
+        <sys_updated_on>2018-05-15 18:46:13</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

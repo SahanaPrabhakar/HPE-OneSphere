@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_user_role">
+    <sys_user_role action="INSERT_OR_UPDATE">
+        <assignable_by/>
+        <can_delegate>true</can_delegate>
+        <description/>
+        <elevated_privilege>false</elevated_privilege>
+        <grantable>true</grantable>
+        <includes_roles/>
+        <name>x_228286_hpe_onesp.onesphere_project_approver</name>
+        <scoped_admin>false</scoped_admin>
+        <suffix>onesphere_project_approver</suffix>
+        <sys_class_name>sys_user_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-15 18:52:04</sys_created_on>
+        <sys_id>db215a1e4f821300fb4cb82ca310c754</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_228286_hpe_onesp.onesphere_project_approver</sys_name>
+        <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
+        <sys_update_name>sys_user_role_db215a1e4f821300fb4cb82ca310c754</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-15 18:52:04</sys_updated_on>
+    </sys_user_role>
+</record_update>
