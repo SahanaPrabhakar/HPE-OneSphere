@@ -21,6 +21,8 @@
         <element label="Project owner" mandatory="true" max_length="32" name="project_owner" reference="sys_user" reference_qual="roles=x_228286_hpe_onesp.onesphere_project_approver^EQ" reference_qual_condition="roles=x_228286_hpe_onesp.onesphere_project_approver^EQ" type="reference"/>
         <element choice="1" label="Request state" max_length="40" name="request_state" type="string">
             <choice>
+                <element label="Approval failed" value="Approval failed"/>
+                <element label="Approval in progress" value="approval in progress"/>
                 <element label="Approved" value="Approved"/>
                 <element label="Rejected" value="rejected"/>
             </choice>

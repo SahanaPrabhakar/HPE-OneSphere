@@ -6,6 +6,44 @@
             <element>request_state</element>
             <hint/>
             <inactive>false</inactive>
+            <label>Approval failed</label>
+            <language>en</language>
+            <name>x_228286_hpe_onesp_onesphere_project</name>
+            <sequence/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-05-18 10:50:27</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>33df334b4f021300fb4cb82ca310c730</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-05-18 10:50:27</sys_updated_on>
+            <value>Approval failed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>request_state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Approval in progress</label>
+            <language>en</language>
+            <name>x_228286_hpe_onesp_onesphere_project</name>
+            <sequence/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-05-18 10:44:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>8f5e770b4f021300fb4cb82ca310c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-05-18 10:44:00</sys_updated_on>
+            <value>approval in progress</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>request_state</element>
+            <hint/>
+            <inactive>false</inactive>
             <label>Approved</label>
             <language>en</language>
             <name>x_228286_hpe_onesp_onesphere_project</name>
