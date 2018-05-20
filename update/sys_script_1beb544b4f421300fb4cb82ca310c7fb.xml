@@ -42,7 +42,7 @@
         Session_request.setHttpMethod('post');
         Session_request.setEndpoint('https://gandharva.dev.hpedevops.net/rest/session');
         Session_request.setRequestHeader("Content-Type","application/json");
-		var body = '{"username":"gandharvas@hpe.com","password":"Procurve@123"}';
+		var body = '{"username":"<username>","password":"<password>"}';
         Session_request.setRequestBody(body);
 
 		var Auth_response = Session_request.execute();
@@ -125,7 +125,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1beb544b4f421300fb4cb82ca310c7fb</sys_id>
-        <sys_mod_count>40</sys_mod_count>
+        <sys_mod_count>41</sys_mod_count>
         <sys_name>ApprovalGan</sys_name>
         <sys_overrides/>
         <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
@@ -133,7 +133,7 @@
         <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
         <sys_update_name>sys_script_1beb544b4f421300fb4cb82ca310c7fb</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-20 11:03:13</sys_updated_on>
+        <sys_updated_on>2018-05-20 13:19:52</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
