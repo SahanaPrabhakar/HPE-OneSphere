@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sc_cat_item">
+    <sc_cat_item action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <category display_value="Cloud">62e576b74f061300fb4cb82ca310c7b7</category>
+        <cost>0</cost>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description/>
+        <entitlement_script/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>false</ignore_price>
+        <image/>
+        <list_price>0</list_price>
+        <location/>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>HPE OneSphere Project</name>
+        <no_cart>false</no_cart>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_search>false</no_search>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=75f9fa3b4f061300fb4cb82ca310c7a8&amp;sysparm_preview=true", "summary");</preview>
+        <price>150</price>
+        <recurring_frequency/>
+        <recurring_price>0</recurring_price>
+        <roles/>
+        <sc_catalogs>e0d08b13c3330100c8b837659bba8fb4</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <short_description/>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <sys_class_name>sc_cat_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:09</sys_created_on>
+        <sys_id>75f9fa3b4f061300fb4cb82ca310c7a8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>HPE OneSphere Project</sys_name>
+        <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
+        <sys_update_name>sc_cat_item_75f9fa3b4f061300fb4cb82ca310c7a8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-20 13:45:09</sys_updated_on>
+        <template/>
+        <type>item</type>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Service Catalog Item Request">0287f2c64a36232700820846b1f8bdce</workflow>
+    </sc_cat_item>
+    <sys_translated_text action="delete_multiple" query="documentkey=75f9fa3b4f061300fb4cb82ca310c7a8"/>
+    <fx_price action="delete_multiple" query="id=75f9fa3b4f061300fb4cb82ca310c7a8"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>150</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>75f9fa3b4f061300fb4cb82ca310c7a8</id>
+        <parent/>
+        <reference_amount>150</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:09</sys_created_on>
+        <sys_id>951bfa3b4f061300fb4cb82ca310c7cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-20 13:45:09</sys_updated_on>
+        <table>sc_cat_item</table>
+        <type>calculated</type>
+    </fx_price>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>recurring_price</field>
+        <id>75f9fa3b4f061300fb4cb82ca310c7a8</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:09</sys_created_on>
+        <sys_id>dd1bfa3b4f061300fb4cb82ca310c7cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-20 13:45:09</sys_updated_on>
+        <table>sc_cat_item</table>
+        <type>calculated</type>
+    </fx_price>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color/>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/svg+xml</content_type>
+        <file_name>picture</file_name>
+        <image_height/>
+        <image_width/>
+        <size_bytes>8671</size_bytes>
+        <size_compressed>2757</size_compressed>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:18</sys_created_on>
+        <sys_id>af1b3ef74f061300fb4cb82ca310c790</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-20 13:45:18</sys_updated_on>
+        <table_name>ZZ_YYsc_cat_item</table_name>
+        <table_sys_id>75f9fa3b4f061300fb4cb82ca310c7a8</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="picture" sys_id="af1b3ef74f061300fb4cb82ca310c790">af1b3ef74f061300fb4cb82ca310c790</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:18</sys_created_on>
+        <sys_id>ef1b3ef74f061300fb4cb82ca310c790</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>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</data>
+        <length>3664</length>
+        <position>1</position>
+        <sys_attachment display_value="picture" sys_id="af1b3ef74f061300fb4cb82ca310c790">af1b3ef74f061300fb4cb82ca310c790</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-20 13:45:18</sys_created_on>
+        <sys_id>631b3ef74f061300fb4cb82ca310c791</sys_id>
+    </sys_attachment_doc>
+</record_update>

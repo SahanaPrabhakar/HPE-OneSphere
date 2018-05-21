@@ -25,6 +25,7 @@
                 <element label="Approval in progress" value="approval in progress"/>
                 <element label="Approved" value="Approved"/>
                 <element label="Rejected" value="rejected"/>
+                <element label="Requested" value="Requested"/>
             </choice>
         </element>
         <element choice="3" default="silver" label="Tier" mandatory="true" max_length="40" name="tier" type="string">

@@ -35,97 +35,226 @@
   return str.replace(/^\s+|\s+$/g, '');
 }
 
-(function executeRule(current, previous /*null when async*/) {
-    // Get Authorization 
-	try{
-		var Session_request = new sn_ws.RESTMessageV2();
+function getAuthToken(){
+               try {
+                              var Session_request = new sn_ws.RESTMessageV2();
         Session_request.setHttpMethod('post');
         Session_request.setEndpoint('https://gandharva.dev.hpedevops.net/rest/session');
         Session_request.setRequestHeader("Content-Type","application/json");
-		var body = '{"username":"<username>","password":"<password>"}';
+                              var body = '{"username":"gandharvas@hpe.com","password":"Procurve@123"}';
         Session_request.setRequestBody(body);
 
-		var Auth_response = Session_request.execute();
-		var httpResponseStatus = Auth_response.getStatusCode();
-		var responseBody = Auth_response.getBody();
-		obj = JSON.parse(responseBody );
-	}
+                              var Auth_response = Session_request.execute();
+                              var httpResponseStatus = Auth_response.getStatusCode();
+                              var responseBody = Auth_response.getBody();
+                              session = JSON.parse(responseBody);
+               }
     catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-        // Script to create project
-	try{
-        var Projrequest = new sn_ws.RESTMessageV2();
+               return session.token;
+}
+
+function createProject(authToken, current){
+               try {
+                   var Projrequest = new sn_ws.RESTMessageV2();
         Projrequest.setHttpMethod('post');
         Projrequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/projects');
         Projrequest.setRequestHeader("Content-Type","application/json");
-        Projrequest.setRequestHeader("Authorization", obj.token);
+        Projrequest.setRequestHeader("Authorization", String(authToken));
         project_name = '\"'+ current.project_name +'\"';
-        var body1 = '{"description": "string1", "name": '+project_name+',"tagUris": ["/rest/tags/environment=development", "/rest/tags/line-of-business=incubation", "/rest/tags/tier=gold"]}';
-		Projrequest.setRequestBody(body1);
-		var response1 = Projrequest.execute();
-        //var httpResponseStatus1 = Projrequest.getStatusCode();
-		
-        //var responseBody1 = response1.getBody();
-	}
-	catch (ex) {
+        var body = '{"description": "string1", "name": '+project_name+',"tagUris": ["/rest/tags/environment=development", "/rest/tags/line-of-business=incubation", "/rest/tags/tier=gold"]}';
+                              Projrequest.setRequestBody(body);
+                              var response = Projrequest.execute();
+                              var responseBody = response.getBody();
+                              project = JSON.parse(responseBody);
+               }
+               catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-	
-	//Create user if already doesnt exsist
-	try{
-		var member_list = current.project_member.getDisplayValue();
-		var member_array = member_list.split(",");
-		
-		//Get the user list
-		var userRequest = new sn_ws.RESTMessageV2();
-				userRequest.setHttpMethod('get');
-				userRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/users');
-				userRequest.setRequestHeader("Content-Type","application/json");
-				userRequest.setRequestHeader("Authorization", obj.token);
-				var userGetResponse = userRequest.execute();
-				var userResponseBody = userGetResponse.getBody();
-				usersJson = JSON.parse(userResponseBody);
-		
-		for(var i = 0; i < member_array.length ; i++){
-			//Fetch the User from table
-			var sysUser1 = new GlideRecord('sys_user');
-			gs.info(sysUser1.get('user_name',trimStr(member_array[i])));
-			name = '\"' + sysUser1.getValue('name') +'\"';
-			email = '\"'+ sysUser1.getValue('email')+'\"';
-			
-			//Check whether the user already exsist
-			for (var j=0; j<usersJson.members.length; j++){
-				userRequest.setHttpMethod('get');
-				userGetResponse = userRequest.execute();
-				userResponseBody = userGetResponse.getBody();
-				usersJson = JSON.parse(userResponseBody);
-				var member= usersJson.members[i];
-				if (email !=member.email) {
-					//Create the user	
-					userRequest.setHttpMethod('post');
-					var userBody = '{"name": '+name+', "email": '+email+', "password": "Procurve@123", "role": "consumer"}';
-					userRequest.setRequestBody(userBody);
-					var userResponse = userRequest.execute();
-				}	
-			}
-		}
-	}
-	catch (ex) {
+               return project;
+}
+
+function getUsers(authToken){
+               try{
+                              //Get the user list
+                              var userRequest = new sn_ws.RESTMessageV2();
+                              userRequest.setHttpMethod('get');
+                              userRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/users');
+                              userRequest.setRequestHeader("Content-Type","application/json");
+                              userRequest.setRequestHeader("Authorization", authToken);
+                              var userGetResponse = userRequest.execute();
+                              var userResponseBody = userGetResponse.getBody();
+                              users = JSON.parse(userResponseBody);
+               }
+               catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-	
-})(current, previous);]]></script>
+               return users;
+}
+
+function getMembershipRoleUris(authToken){
+               // Script to Get membership roles of Project Owner/User
+               try{
+                              var memberRequest = new sn_ws.RESTMessageV2();
+                              memberRequest.setHttpMethod('get');
+                              memberRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/membership-roles');
+                              memberRequest.setRequestHeader("Content-Type","application/json");
+                              memberRequest.setRequestHeader("Authorization", authToken);
+
+                              var response = memberRequest.execute();
+                              var responseBody = response.getBody();
+                              rolesUris= JSON.parse(responseBody);
+                 }
+               catch (ex) {
+                              gs.info("error while getting Membership Role Uris");
+                              }
+               return rolesUris;
+}
+
+function createUser(authToken, name, email, role){
+               try{
+                              //Get the user list
+                              var userRequest = new sn_ws.RESTMessageV2();
+                              userRequest.setHttpMethod('post');
+                              userRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/users');
+                              userRequest.setRequestHeader("Content-Type","application/json");
+                              userRequest.setRequestHeader("Authorization", authToken);
+                              var userBody = '{"name": '+name+', "email": '+email+', "password": "Procurve@123", "role": '+role+'}';
+                              userRequest.setRequestBody(userBody);
+                              var userResponse = userRequest.execute();
+                              var userResponseBody = userResponse.getBody();
+                              response = JSON.parse(userResponseBody);
+               }
+               catch (ex) {
+        var message = ex.getMessage();
+        gs.debug(message);
+    }
+               return response;
+}
+
+function passwordReset(authToken, email){
+               try{
+                              //Get the user list
+                              var passwordResetRequest = new sn_ws.RESTMessageV2();
+                              passwordResetRequest.setHttpMethod('post');
+                              passwordResetRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/password-reset');
+                              passwordResetRequest.setRequestHeader("Content-Type","application/json");
+                              passwordResetRequest.setRequestHeader("Authorization", authToken);
+                              var body = '{"email": '+email+'}';
+                              passwordResetRequest.setRequestBody(body);
+                              var response = passwordResetRequest.execute();
+                              userResponseStatus = response.getStatusCode();
+               }
+               catch (ex) {
+					var message = ex.getMessage();
+					gs.debug(message);
+				}
+               return userResponseStatus;
+}
+
+function processUser(authToken, name, email, role){
+               // Get Existing Users
+               users = getUsers(authToken);
+               createUserFlag = true;
+               for (var j=0; j<users.members.length; j++){
+                              member= users.members[j];
+                              if (email == '\"'+member.email+'\"'){
+                                             user = member;
+                                             createUserFlag = false;
+                              }
+               }
+               if (createUserFlag == true){
+                              // Create user with specific role
+                              user = createUser(authToken, name, email,  '\"'+role+ '\"');
+                              // Password Reset Mail is sent for the newly created user
+                              passwordReset(authToken, email);
+               }
+               return user;
+}
+
+function addUserToProject(authToken, projectUri, projectMemberUri, userUri){
+               try{
+                              //Get the user list
+                              var memberRequest = new sn_ws.RESTMessageV2();
+                              memberRequest.setHttpMethod('post');
+                              memberRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/memberships');
+                              memberRequest.setRequestHeader("Content-Type","application/json");
+                              memberRequest.setRequestHeader("Authorization", authToken);
+                              var memberRequestBody = '{"membershipRoleUri":'+projectMemberUri+', "projectUri": '+projectUri+', "userUri": '+userUri+'}';
+                              memberRequest.setRequestBody(memberRequestBody);
+                              var memberResponse = memberRequest.execute();
+                              var memberResponseBody = memberResponse.getBody();
+                              response = JSON.parse(memberResponseBody);
+               }
+               catch (ex) {
+        var message = ex.getMessage();
+        gs.debug(message);
+    }
+               return response;
+}
+
+(function executeRule(current, previous /*null when async*/) {
+    // Get Authorization 
+               try{
+                              // Get Auth Token
+                              authToken = getAuthToken();
+                              // Create project
+                              project = createProject(authToken, current);
+                              
+                              // Get Membership Role Uris for Project Owner and Project Member
+                              rolesUris = getMembershipRoleUris(authToken);
+                              for(var i=0; i<rolesUris.members.length; i++){
+                                             member = rolesUris.members[i];
+                                             if (member.name == "project-owner"){
+                                                            projectOwnerUri = member.uri;
+                                             }
+                                             if (member.name == "project-member"){
+                                                            projectMemberUri = member.uri;
+                                             }
+                              }
+                              var project_owner_email = current.project_owner.email;
+                              var project_owner_name = current.project_owner.name;
+                              
+                              // Check whether Project Owner User is present, if not create a project owner user and 
+                              // add that user as administrator and finally add that user to the created project
+                              user = processUser(authToken, '\"'+project_owner_name+'\"', '\"'+project_owner_email+'\"', "administrator");
+                              // TODO we need to check if the user is added to the project and then add that user
+                              addUserToProject(authToken, '\"'+project.uri+'\"', '\"'+projectOwnerUri+'\"', '\"'+user.uri+'\"');
+                              
+                              var member_list = current.project_member.getDisplayValue();
+                              var member_array = member_list.split(",");
+                                                            
+                              for(i = 0; i < member_array.length ; i++){
+                                             //Fetch the User from table
+                                             var sysUser1 = new GlideRecord('sys_user');
+                                             gs.info(sysUser1.get('user_name',trimStr(member_array[i])));
+                                             name = '\"' + sysUser1.getValue('name') +'\"';
+                                             email = '\"'+ sysUser1.getValue('email')+'\"';
+                                             
+                                             // Check whether the project users already exist if not create them and
+                                             // add those users to the project as consumer
+                                             user = processUser(authToken, name, email, "consumer");
+                                             // TODO we need to check if the user is added to the project and then add that user
+                                             addUserToProject(authToken, '\"'+project.uri+'\"', '\"'+projectMemberUri+'\"', '\"'+user.uri+'\"');
+                              }
+               }
+               catch (ex) {
+        var message = ex.getMessage();
+        gs.debug(message);
+    }          
+})(current, previous);
+]]></script>
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-05-17 18:28:24</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1beb544b4f421300fb4cb82ca310c7fb</sys_id>
-        <sys_mod_count>41</sys_mod_count>
+        <sys_mod_count>77</sys_mod_count>
         <sys_name>ApprovalGan</sys_name>
         <sys_overrides/>
         <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
@@ -133,7 +262,7 @@
         <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
         <sys_update_name>sys_script_1beb544b4f421300fb4cb82ca310c7fb</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-20 13:19:52</sys_updated_on>
+        <sys_updated_on>2018-05-21 14:51:19</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
