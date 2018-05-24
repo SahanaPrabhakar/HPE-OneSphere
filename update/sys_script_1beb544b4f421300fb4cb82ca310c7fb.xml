@@ -21,7 +21,7 @@
         </filter_condition>
         <is_rest>false</is_rest>
         <message><![CDATA[<p>Hi business rule</p>]]></message>
-        <name>ApprovalGan</name>
+        <name>ApprovalUser</name>
         <order>1001</order>
         <priority>100</priority>
         <rest_method/>
@@ -29,131 +29,139 @@
         <rest_service/>
         <rest_service_text/>
         <rest_variables/>
-        <role_conditions>x_228286_hpe_onesp.onesphere_project_approver</role_conditions>
-        <script><![CDATA[function trimStr(str) {
+        <role_conditions/>
+        <script><![CDATA[// Please provide your OneSphere details and creds below
+var oneSphereUri ="<OneSphereUri>";
+var oneSphereUser ="<email/username>";
+var oneSpherePassword = "<password>";
+
+// Trim extra spaces if any
+function trimStr(str) {
   if(str == null) return str;
   return str.replace(/^\s+|\s+$/g, '');
 }
 
 function getAuthToken(){
-               try {
-                              var Session_request = new sn_ws.RESTMessageV2();
+	try {
+		oneSphereUser = '\"'+oneSphereUser+'\"';
+        oneSpherePassword = '\"'+oneSpherePassword +'\"';
+        var Session_request = new sn_ws.RESTMessageV2();
         Session_request.setHttpMethod('post');
-        Session_request.setEndpoint('https://gandharva.dev.hpedevops.net/rest/session');
+        Session_request.setEndpoint(oneSphereUri+'/rest/session');
         Session_request.setRequestHeader("Content-Type","application/json");
-                              var body = '{"username":"gandharvas@hpe.com","password":"Procurve@123"}';
+        var body = '{"username":'+oneSphereUser+',"password":'+oneSpherePassword+'}';
         Session_request.setRequestBody(body);
 
-                              var Auth_response = Session_request.execute();
-                              var httpResponseStatus = Auth_response.getStatusCode();
-                              var responseBody = Auth_response.getBody();
-                              session = JSON.parse(responseBody);
-               }
+        var Auth_response = Session_request.execute();
+        var httpResponseStatus = Auth_response.getStatusCode();
+        var responseBody = Auth_response.getBody();
+        session = JSON.parse(responseBody);
+	}
     catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-               return session.token;
+	return session.token;
 }
 
 function createProject(authToken, current){
-               try {
-                   var Projrequest = new sn_ws.RESTMessageV2();
+	try {
+		var Projrequest = new sn_ws.RESTMessageV2();
         Projrequest.setHttpMethod('post');
-        Projrequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/projects');
+        Projrequest.setEndpoint(oneSphereUri+'/rest/projects');
         Projrequest.setRequestHeader("Content-Type","application/json");
         Projrequest.setRequestHeader("Authorization", String(authToken));
         project_name = '\"'+ current.project_name +'\"';
         var body = '{"description": "string1", "name": '+project_name+',"tagUris": ["/rest/tags/environment=development", "/rest/tags/line-of-business=incubation", "/rest/tags/tier=gold"]}';
-                              Projrequest.setRequestBody(body);
-                              var response = Projrequest.execute();
-                              var responseBody = response.getBody();
-                              project = JSON.parse(responseBody);
-               }
-               catch (ex) {
+        Projrequest.setRequestBody(body);
+        var response = Projrequest.execute();
+        var responseBody = response.getBody();
+        project = JSON.parse(responseBody);
+	}
+	catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-               return project;
+	return project;
 }
 
 function getUsers(authToken){
-               try{
-                              //Get the user list
-                              var userRequest = new sn_ws.RESTMessageV2();
-                              userRequest.setHttpMethod('get');
-                              userRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/users');
-                              userRequest.setRequestHeader("Content-Type","application/json");
-                              userRequest.setRequestHeader("Authorization", authToken);
-                              var userGetResponse = userRequest.execute();
-                              var userResponseBody = userGetResponse.getBody();
-                              users = JSON.parse(userResponseBody);
-               }
-               catch (ex) {
-        var message = ex.getMessage();
+	try{
+		//Get the user list
+		var userRequest = new sn_ws.RESTMessageV2();
+		userRequest.setHttpMethod('get');
+        userRequest.setEndpoint(oneSphereUri+'/rest/users');
+        userRequest.setRequestHeader("Content-Type","application/json");
+        userRequest.setRequestHeader("Authorization", authToken);
+        var userGetResponse = userRequest.execute();
+        var userResponseBody = userGetResponse.getBody();
+        users = JSON.parse(userResponseBody);
+	}
+	catch (ex) {
+		var message = ex.getMessage();
         gs.debug(message);
     }
-               return users;
+        return users;
 }
 
 function getMembershipRoleUris(authToken){
-               // Script to Get membership roles of Project Owner/User
-               try{
-                              var memberRequest = new sn_ws.RESTMessageV2();
-                              memberRequest.setHttpMethod('get');
-                              memberRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/membership-roles');
-                              memberRequest.setRequestHeader("Content-Type","application/json");
-                              memberRequest.setRequestHeader("Authorization", authToken);
+	// Script to Get membership roles of Project Owner/User
+    try{
+		var memberRequest = new sn_ws.RESTMessageV2();
+		memberRequest.setHttpMethod('get');
+		memberRequest.setEndpoint(oneSphereUri+'/rest/membership-roles');
+		memberRequest.setRequestHeader("Content-Type","application/json");
+		memberRequest.setRequestHeader("Authorization", authToken);
 
-                              var response = memberRequest.execute();
-                              var responseBody = response.getBody();
-                              rolesUris= JSON.parse(responseBody);
-                 }
-               catch (ex) {
-                              gs.info("error while getting Membership Role Uris");
-                              }
-               return rolesUris;
+        var response = memberRequest.execute();
+        var responseBody = response.getBody();
+        rolesUris= JSON.parse(responseBody);
+	}
+	catch (ex) {
+		gs.info("error while getting Membership Role Uris");
+	}
+	return rolesUris;
 }
 
 function createUser(authToken, name, email, role){
-               try{
-                              //Get the user list
-                              var userRequest = new sn_ws.RESTMessageV2();
-                              userRequest.setHttpMethod('post');
-                              userRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/users');
-                              userRequest.setRequestHeader("Content-Type","application/json");
-                              userRequest.setRequestHeader("Authorization", authToken);
-                              var userBody = '{"name": '+name+', "email": '+email+', "password": "Procurve@123", "role": '+role+'}';
-                              userRequest.setRequestBody(userBody);
-                              var userResponse = userRequest.execute();
-                              var userResponseBody = userResponse.getBody();
-                              response = JSON.parse(userResponseBody);
-               }
-               catch (ex) {
+	try{
+		//Get the user list
+		var userRequest = new sn_ws.RESTMessageV2();
+        userRequest.setHttpMethod('post');
+        userRequest.setEndpoint(oneSphereUri+'/rest/users');
+        userRequest.setRequestHeader("Content-Type","application/json");
+        userRequest.setRequestHeader("Authorization", authToken);
+        var userBody = '{"name": '+name+', "email": '+email+', "password": "Procurve@123", "role": '+role+'}';
+        userRequest.setRequestBody(userBody);
+        var userResponse = userRequest.execute();
+        var userResponseBody = userResponse.getBody();
+        response = JSON.parse(userResponseBody);
+	}
+	catch (ex) {
         var message = ex.getMessage();
         gs.debug(message);
     }
-               return response;
+	return response;
 }
 
 function passwordReset(authToken, email){
-               try{
-                              //Get the user list
-                              var passwordResetRequest = new sn_ws.RESTMessageV2();
-                              passwordResetRequest.setHttpMethod('post');
-                              passwordResetRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/password-reset');
-                              passwordResetRequest.setRequestHeader("Content-Type","application/json");
-                              passwordResetRequest.setRequestHeader("Authorization", authToken);
-                              var body = '{"email": '+email+'}';
-                              passwordResetRequest.setRequestBody(body);
-                              var response = passwordResetRequest.execute();
-                              userResponseStatus = response.getStatusCode();
-               }
-               catch (ex) {
-					var message = ex.getMessage();
-					gs.debug(message);
-				}
-               return userResponseStatus;
+	try{
+		//Get the user list
+        var passwordResetRequest = new sn_ws.RESTMessageV2();
+        passwordResetRequest.setHttpMethod('post');
+        passwordResetRequest.setEndpoint(oneSphereUri+'/rest/password-reset');
+        passwordResetRequest.setRequestHeader("Content-Type","application/json");
+        passwordResetRequest.setRequestHeader("Authorization", authToken);
+        var body = '{"email": '+email+'}';
+        passwordResetRequest.setRequestBody(body);
+        var response = passwordResetRequest.execute();
+        userResponseStatus = response.getStatusCode();
+	}
+	catch (ex) {
+		var message = ex.getMessage();
+		gs.debug(message);
+	}
+	return userResponseStatus;
 }
 
 function processUser(authToken, name, email, role){
@@ -181,7 +189,7 @@ function addUserToProject(authToken, projectUri, projectMemberUri, userUri){
                               //Get the user list
                               var memberRequest = new sn_ws.RESTMessageV2();
                               memberRequest.setHttpMethod('post');
-                              memberRequest.setEndpoint('https://gandharva.dev.hpedevops.net/rest/memberships');
+                              memberRequest.setEndpoint(oneSphereUri+'/rest/memberships');
                               memberRequest.setRequestHeader("Content-Type","application/json");
                               memberRequest.setRequestHeader("Authorization", authToken);
                               var memberRequestBody = '{"membershipRoleUri":'+projectMemberUri+', "projectUri": '+projectUri+', "userUri": '+userUri+'}';
@@ -254,15 +262,15 @@ function addUserToProject(authToken, projectUri, projectMemberUri, userUri){
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1beb544b4f421300fb4cb82ca310c7fb</sys_id>
-        <sys_mod_count>77</sys_mod_count>
-        <sys_name>ApprovalGan</sys_name>
+        <sys_mod_count>82</sys_mod_count>
+        <sys_name>ApprovalUser</sys_name>
         <sys_overrides/>
         <sys_package display_value="HPE OneSphere" source="x_228286_hpe_onesp">2a7588ca4f421300fb4cb82ca310c76c</sys_package>
         <sys_policy/>
         <sys_scope display_value="HPE OneSphere">2a7588ca4f421300fb4cb82ca310c76c</sys_scope>
         <sys_update_name>sys_script_1beb544b4f421300fb4cb82ca310c7fb</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-21 14:51:19</sys_updated_on>
+        <sys_updated_on>2018-05-24 12:40:10</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

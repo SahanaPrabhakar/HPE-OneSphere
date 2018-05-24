@@ -2,7 +2,7 @@
 <record_update table="sys_embedded_help_role">
     <sys_embedded_help_role action="INSERT_OR_UPDATE">
         <order>1000</order>
-        <role display_value="x_228286_hpe_onesp.onesphere_project_approver" name="x_228286_hpe_onesp.onesphere_project_approver">db215a1e4f821300fb4cb82ca310c754</role>
+        <role/>
         <sys_class_name>sys_embedded_help_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-05-15 18:52:04</sys_created_on>
